@@ -31,8 +31,8 @@ def create_app():
     # from .user_routes import user_bp
     # app.register_blueprint(user_bp)
 
-    # from .skill_routes import skill_bp
-    # app.register_blueprint(skill_bp)
+    from .skill_routes import skills_bp
+    app.register_blueprint(skills_bp)
 
     # from .trade_routes import trade_bp
     # app.register_blueprint(trade_bp)

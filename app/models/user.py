@@ -9,3 +9,4 @@ class User(db.Model):
     city = db.Column(db.String)
     user_icon = db.Column(db.String)
     profile_desc = db.Column(db.String)
+    skills = db.relationship("Skill", back_populates="user")
