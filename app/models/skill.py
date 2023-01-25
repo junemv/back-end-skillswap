@@ -5,11 +5,11 @@ from flask import abort, make_response
 class Skill(db.Model):
     skill_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     tags = db.Column(db.ARRAY(db.String), nullable=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.user_id"), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user_profile.user_id"), nullable=True)
     name = db.Column(db.String)
     description = db.Column(db.String)
     time = db.Column(db.Integer)
-    user = db.relationship("User", back_populates="skills")
+    user = db.relationship("User_profile", back_populates="skills")
 
     def to_json(self):
         return {

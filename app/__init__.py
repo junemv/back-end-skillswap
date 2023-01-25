@@ -20,7 +20,7 @@ def create_app():
 
     # Import models here for Alembic setup
     # from app.models.ExampleModel import ExampleModel
-    from app.models.user import User
+    from app.models.user import User_profile
     from app.models.skill import Skill
     from app.models.trade import Trade
 
