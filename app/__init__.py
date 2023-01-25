@@ -20,7 +20,7 @@ def create_app():
 
     # Import models here for Alembic setup
     # from app.models.ExampleModel import ExampleModel
-    from app.models.user import User_profile
+    from app.models.user import User_
     from app.models.skill import Skill
     from app.models.trade import Trade
 
@@ -28,8 +28,8 @@ def create_app():
     migrate.init_app(app, db)
 
     # Register Blueprints here
-    # from .user_routes import user_bp
-    # app.register_blueprint(user_bp)
+    from .user_routes import user_bp
+    app.register_blueprint(user_bp)
 
     from .skill_routes import skills_bp
     app.register_blueprint(skills_bp)

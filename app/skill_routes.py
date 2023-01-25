@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify, abort, make_response
 from app import db
 from app.models.skill import Skill
+from app.user_routes import validate_model
 
 skills_bp = Blueprint("skills", __name__, url_prefix="/skills")
 
@@ -39,13 +40,11 @@ def get_all_skills():
 @skills_bp.route("/<skill_id>", methods=["DELETE"])
 def delete_skill(skill_id):
     '''
-    DELETE method - allows user to remove specified skill record
+    DELETE method - allows user to remove specified skill record by ID
     '''
-    # skill = validate_model(Skill, skill_id)
-    skill = Skill.query.get(skill_id)
+    skill = validate_model(Skill, skill_id)
 
     db.session.delete(skill)
     db.session.commit()
-
-    # return {"details": "successfully deleted"}
+    
     return {"details": f"Skill {skill.skill_id} '{skill.name}' successfully deleted"}
