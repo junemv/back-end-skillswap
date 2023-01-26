@@ -24,7 +24,17 @@ class User_(db.Model):
     @classmethod
     def from_json(cls, user_json):
         if user_json.get("user_name") and user_json.get("first_name") and user_json.get("last_name"):
-            new_obj = cls(user_name=user_json["user_name"], first_name=user_json["first_name"], last_name=user_json["last_name"])
+            if "city" not in user_json:
+                user_json["city"] = None
+            if "profile_desc" not in user_json:
+                user_json["profile_desc"] = None
+
+            new_obj = cls(user_name=user_json["user_name"], 
+                        first_name=user_json["first_name"], 
+                        last_name=user_json["last_name"],
+                        city=user_json["city"],
+                        profile_desc=user_json["profile_desc"])
+
             return new_obj
         else:
             abort(make_response({"Invalid data": "User name, first name, and last name fields cannot be blank"}, 400))

@@ -37,6 +37,17 @@ def get_all_skills():
 
     return jsonify(result), 200
 
+
+@skills_bp.route("/<skill_id>", methods=["GET"])
+def get_one_skill(skill_id):
+    '''
+    GET method - allows user to get one skill table record by ID
+    '''
+    skill = validate_model(Skill, skill_id)
+
+    return {"skill": skill.to_json()}
+
+
 @skills_bp.route("/<skill_id>", methods=["DELETE"])
 def delete_skill(skill_id):
     '''
@@ -48,3 +59,18 @@ def delete_skill(skill_id):
     db.session.commit()
     
     return {"details": f"Skill {skill.skill_id} '{skill.name}' successfully deleted"}
+
+@skills_bp.route("/<skill_id>/update_skill", methods=["PATCH"])
+def update_skill(skill_id):
+    skill = validate_model(Skill, skill_id)
+
+    request_body = request.get_json()
+
+    skill.name = request_body["name"]
+    skill.tags = request_body["tags"]
+    skill.description = request_body["description"]
+    skill.time = request_body["time"]
+
+    db.session.commit()
+
+    return make_response(jsonify({"skill": skill.to_json()}), 200)

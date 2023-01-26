@@ -1,7 +1,6 @@
 from app import db
 from flask import abort, make_response
 
-
 class Skill(db.Model):
     skill_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     tags = db.Column(db.ARRAY(db.String), nullable=True)
@@ -24,7 +23,14 @@ class Skill(db.Model):
     @classmethod
     def from_json(cls, skill_json):
         if skill_json.get("name") and skill_json.get("description") and skill_json.get("time"):
-            new_obj = cls(name=skill_json["name"], description=skill_json["description"], time=skill_json["time"])
+            if "tags" not in skill_json:
+                skill_json["tags"] = None
+
+            new_obj = cls(name=skill_json["name"], 
+                        tags=skill_json["tags"], 
+                        description=skill_json["description"], 
+                        time=skill_json["time"])
+
             return new_obj
         else:
-            abort(make_response({"Invalid data": "Name, description, and time ields cannot be blank"}, 400))
+            abort(make_response({"Invalid data": "Name, description, and time fields cannot be blank"}, 400))

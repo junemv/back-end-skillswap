@@ -31,7 +31,7 @@ def create_user():
     try:
         new_user = User_.from_json(request_body)
     except:
-        return make_response({"details": "Invalid data"}, 400)
+        return make_response({"details": "Invalid data", "request body": f"{request_body}"}, 400)
 
     db.session.add(new_user)
     db.session.commit()
@@ -55,8 +55,18 @@ def get_all_users():
     return jsonify(result), 200
 
 
+@user_bp.route("/<user_id>", methods=["GET"])
+def get_one_user(user_id):
+    '''
+    GET method - allows user to get one user table record by ID
+    '''
+    user = validate_model(User_, user_id)
+
+    return {"user": user.to_json()}
+
+
 @user_bp.route("/<user_id>", methods=["DELETE"])
-def delete_skill(user_id):
+def delete_user(user_id):
     '''
     DELETE method - allows user to remove specified user record by ID
     '''
@@ -66,3 +76,19 @@ def delete_skill(user_id):
     db.session.commit()
 
     return {"details": f"User {user.user_id} '{user.user_name}' successfully deleted"}
+
+@user_bp.route("/<user_id>/update_user", methods=["PATCH"])
+def update_user(user_id):
+    user = validate_model(User_, user_id)
+
+    request_body = request.get_json()
+
+    user.first_name = request_body["first_name"]
+    user.last_name = request_body["last_name"]
+    user.city = request_body["city"]
+    user.user_icon = request_body["user_icon"]
+    user.profile_desc = request_body["profile_desc"]
+
+    db.session.commit()
+
+    return make_response(jsonify({"user": user.to_json()}), 200)
