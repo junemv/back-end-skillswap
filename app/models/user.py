@@ -3,6 +3,7 @@ from flask import abort, make_response
 
 class User_(db.Model):
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    email = db.Column(db.String)
     user_name = db.Column(db.String)
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
@@ -14,6 +15,7 @@ class User_(db.Model):
     def to_json(self):
         return {
             "id": self.user_id,
+            "email": self.email,
             "user name": self.user_name,
             "first name": self.first_name,
             "last name": self.last_name,
@@ -23,13 +25,14 @@ class User_(db.Model):
 
     @classmethod
     def from_json(cls, user_json):
-        if user_json.get("user_name") and user_json.get("first_name") and user_json.get("last_name"):
+        if user_json.get("user_name") and user_json.get("first_name") and user_json.get("last_name") and user_json.get("email"):
             if "city" not in user_json:
                 user_json["city"] = None
             if "profile_desc" not in user_json:
                 user_json["profile_desc"] = None
 
             new_obj = cls(user_name=user_json["user_name"], 
+                        email=user_json["email"],
                         first_name=user_json["first_name"], 
                         last_name=user_json["last_name"],
                         city=user_json["city"],
@@ -37,4 +40,4 @@ class User_(db.Model):
 
             return new_obj
         else:
-            abort(make_response({"Invalid data": "User name, first name, and last name fields cannot be blank"}, 400))
+            abort(make_response({"Invalid data": "User name, first name, last name, and email fields cannot be blank"}, 400))
