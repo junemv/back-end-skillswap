@@ -65,6 +65,20 @@ def get_one_user(user_id):
     return {"user": user.to_json()}
 
 
+@user_bp.route("/username/<username>", methods=["GET"])
+def get_one_user_by_user_name(username):
+    '''
+    GET method - allows user to get one user table record by User Name
+    '''
+    try:
+        user = User_.query.filter_by(user_name=username).first()
+        make_response()
+    except:
+        abort(make_response(jsonify({"msg": f"User name: {username} does not exist."}), 400))
+
+    return {"user": user.to_json()}
+
+
 @user_bp.route("/<user_id>", methods=["DELETE"])
 def delete_user(user_id):
     '''
