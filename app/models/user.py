@@ -16,11 +16,11 @@ class User_(db.Model):
         return {
             "id": self.user_id,
             "email": self.email,
-            "user name": self.user_name,
-            "first name": self.first_name,
-            "last name": self.last_name,
+            "user_name": self.user_name,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
             "city": self.city,
-            "profile description": self.profile_desc,
+            "profile_desc": self.profile_desc,
         }
 
     @classmethod
