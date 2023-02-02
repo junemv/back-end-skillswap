@@ -96,6 +96,20 @@ def get_one_user_by_user_name(username):
     return {"user": user.to_json()}
 
 
+@user_bp.route("/email/<email>", methods=["GET"])
+def get_one_user_by_email(email):
+    '''
+    GET method - allows user to get one user table record by email
+    '''
+    try:
+        user = User_.query.filter_by(email=email).first()
+        make_response()
+    except:
+        abort(make_response(jsonify({"msg": f"User with email: {email} does not exist."}), 400))
+
+    return {"user": user.to_json()}
+
+
 @user_bp.route("/<user_id>", methods=["DELETE"])
 def delete_user(user_id):
     '''
