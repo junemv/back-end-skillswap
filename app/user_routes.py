@@ -21,17 +21,38 @@ def validate_model(cls, model_id):
     
     return model
 
+def get_all_users_helper():
+    '''
+    helper function - queries all user records from the User_ table
+    '''
+    users = User_.query.all()
+
+    result = []
+    for item in users:
+        result.append(item.to_json())
+
+    return result
+
 
 @user_bp.route("", methods=["POST"])
 def create_user():
     '''
-    POST method - allows client to post user_ records to the users_ table
+    POST method - allows client to post user_ records to the users_ table.
+    Includes logic to validate if email or user_name is currently in use.
     '''
     request_body = request.get_json()
     try:
         new_user = User_.from_json(request_body)
     except:
-        return make_response({"details": "Invalid data", "request body": f"{request_body}"}, 400)
+        return make_response({"details": "Invalid data, missing required field"}, 400)
+
+    users = get_all_users_helper()
+    for user in users:
+        if user["email"] == new_user.email:
+            return make_response({"details": "User with that email address already exists"}, 400)
+        elif user["user_name"] == new_user.user_name:
+            return make_response({"details": "User with that user name already exists"}, 400)
+
 
     db.session.add(new_user)
     db.session.commit()
@@ -46,13 +67,9 @@ def get_all_users():
     '''
     GET method - allows client to get all user records from the user_ table
     '''
-    users = User_.query.all()
+    users = get_all_users_helper()
 
-    result = []
-    for item in users:
-        result.append(item.to_json())
-
-    return jsonify(result), 200
+    return jsonify(users), 200
 
 
 @user_bp.route("/<user_id>", methods=["GET"])
