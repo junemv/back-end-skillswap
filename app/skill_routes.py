@@ -47,6 +47,7 @@ def get_one_skill(skill_id):
 
     return {"skill": skill.to_json()}
 
+
 @skills_bp.route("/<user_id>", methods=["GET"])
 def get_all_user_skills_by_user_id(user_id):
     '''

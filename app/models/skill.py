@@ -4,7 +4,8 @@ from flask import abort, make_response
 class Skill(db.Model):
     skill_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     tags = db.Column(db.ARRAY(db.String), nullable=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user_.user_id"), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user_.user_id"))
+    user_name = db.Column(db.Integer, db.ForeignKey("user_.user_name"))
     name = db.Column(db.String)
     description = db.Column(db.String)
     time = db.Column(db.Integer)
@@ -17,7 +18,8 @@ class Skill(db.Model):
             "tags": self.tags,
             "description": self.description,
             "time": self.time,
-            "user_id": self.user_id,
+            "user_name": self.user_name,
+            "user_id": self.user_id
         }
 
     @classmethod
@@ -30,6 +32,7 @@ class Skill(db.Model):
                         tags=skill_json["tags"], 
                         description=skill_json["description"], 
                         time=skill_json["time"],
+                        user_name=skill_json["user_name"],
                         user_id=skill_json["user_id"])
 
             return new_obj
