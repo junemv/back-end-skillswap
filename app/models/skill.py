@@ -5,7 +5,7 @@ class Skill(db.Model):
     skill_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     tags = db.Column(db.ARRAY(db.String), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user_.user_id"))
-    user_name = db.Column(db.Integer, db.ForeignKey("user_.user_name"))
+    user_name = db.Column(db.String)
     name = db.Column(db.String)
     description = db.Column(db.String)
     time = db.Column(db.Integer)
