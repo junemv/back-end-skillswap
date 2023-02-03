@@ -47,6 +47,19 @@ def get_one_skill(skill_id):
 
     return {"skill": skill.to_json()}
 
+@skills_bp.route("/<user_id>", methods=["GET"])
+def get_all_user_skills_by_user_id(user_id):
+    '''
+    GET method - allows user to get one user table record by User Name
+    '''
+    try:
+        user = Skill.query.filter_by(user_id=id).first()
+        make_response()
+    except:
+        abort(make_response(jsonify({"msg": f"User id: {user_id} does not exist."}), 400))
+
+    return {"user": user.to_json()}
+
 
 @skills_bp.route("/<skill_id>", methods=["DELETE"])
 def delete_skill(skill_id):

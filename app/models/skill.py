@@ -22,14 +22,15 @@ class Skill(db.Model):
 
     @classmethod
     def from_json(cls, skill_json):
-        if skill_json.get("name") and skill_json.get("description") and skill_json.get("time"):
+        if skill_json.get("name") and skill_json.get("description") and skill_json.get("time") and skill_json.get("user_id"):
             if "tags" not in skill_json:
                 skill_json["tags"] = None
 
             new_obj = cls(name=skill_json["name"], 
                         tags=skill_json["tags"], 
                         description=skill_json["description"], 
-                        time=skill_json["time"])
+                        time=skill_json["time"],
+                        user_id=skill_json["user_id"])
 
             return new_obj
         else:
