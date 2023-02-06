@@ -27,9 +27,9 @@ class User_(db.Model):
     def from_json(cls, user_json):
         if user_json.get("user_name") and user_json.get("first_name") and user_json.get("last_name") and user_json.get("email"):
             if "city" not in user_json:
-                user_json["city"] = None
+                user_json["city"] = ""
             if "profile_desc" not in user_json:
-                user_json["profile_desc"] = None
+                user_json["profile_desc"] = ""
 
             new_obj = cls(user_name=user_json["user_name"], 
                         email=user_json["email"],
