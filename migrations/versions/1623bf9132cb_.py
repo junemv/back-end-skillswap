@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 0db959fdc6f2
+Revision ID: 1623bf9132cb
 Revises: 
-Create Date: 2023-02-03 12:05:30.933482
+Create Date: 2023-02-06 15:55:28.139877
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '0db959fdc6f2'
+revision = '1623bf9132cb'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -27,6 +27,7 @@ def upgrade():
     sa.Column('city', sa.String(), nullable=True),
     sa.Column('user_icon', sa.String(), nullable=True),
     sa.Column('profile_desc', sa.String(), nullable=True),
+    sa.Column('notif_count', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('user_id')
     )
     op.create_table('skill',
@@ -48,6 +49,9 @@ def upgrade():
     sa.Column('recip_skill', sa.Integer(), nullable=True),
     sa.Column('send_accept', sa.Boolean(), nullable=True),
     sa.Column('recip_accept', sa.Boolean(), nullable=True),
+    sa.Column('time_stamp', sa.DateTime(), nullable=True),
+    sa.Column('send_viewed', sa.Boolean(), nullable=True),
+    sa.Column('recip_viewed', sa.Boolean(), nullable=True),
     sa.ForeignKeyConstraint(['recip_skill'], ['skill.skill_id'], ),
     sa.ForeignKeyConstraint(['recip_user'], ['user_.user_id'], ),
     sa.ForeignKeyConstraint(['send_skill'], ['skill.skill_id'], ),

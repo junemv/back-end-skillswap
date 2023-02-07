@@ -34,8 +34,8 @@ def create_app():
     from .skill_routes import skills_bp
     app.register_blueprint(skills_bp)
 
-    # from .trade_routes import trade_bp
-    # app.register_blueprint(trade_bp)
+    from .trade_routes import trades_bp
+    app.register_blueprint(trades_bp)
 
     CORS(app)
     return app
