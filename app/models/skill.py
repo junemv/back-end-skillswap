@@ -25,7 +25,7 @@ class Skill(db.Model):
     @classmethod
     def from_json(cls, skill_json):
         if skill_json.get("name") and skill_json.get("description") and skill_json.get("time") and skill_json.get("user_id"):
-          #add user_name to conditional
+            #add user_name to conditional
             if "tags" not in skill_json:
                 skill_json["tags"] = None
 
