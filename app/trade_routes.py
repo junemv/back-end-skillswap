@@ -86,16 +86,10 @@ def view_trade(trade_id, user_id):
     trade = validate_model(Trade, trade_id)
     user = validate_model(User_, user_id)
 
-    request_body = request.get_json()
-
-    if user.user_id == request_body["send_user"]:
+    if user.user_id == trade.send_user:
         trade.send_viewed = not trade.send_viewed
-    elif user.user_id == request_body["recip_user"]:
+    elif user.user_id == trade.recip_user:
         trade.recip_viewed = not trade.recip_viewed
-
-    # trade.send_viewed = request_body["send_viewed"]
-    # trade.recip_viewed = request_body["recip_viewed"]
-    # trade.time_stamp = datetime.utcnow()
 
     db.session.commit()
 
@@ -110,11 +104,9 @@ def update_skill(trade_id, user_id):
     trade = validate_model(Trade, trade_id)
     user = validate_model(User_, user_id)
 
-    request_body = request.get_json()
-
-    if user.user_id == request_body["send_user"]:
+    if user.user_id == trade.send_user: 
         trade.send_accept = not trade.send_accept
-    elif user.user_id == request_body["recip_user"]:
+    elif user.user_id == trade.recip_user:
         trade.recip_accept = not trade.recip_accept
     trade.time_stamp = datetime.now()
 
