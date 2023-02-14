@@ -22,7 +22,8 @@ class User_(db.Model):
             "last_name": self.last_name,
             "city": self.city,
             "profile_desc": self.profile_desc,
-            "notif_count": self.notif_count
+            "notif_count": self.notif_count,
+            "user_icon": self.user_icon
         }
 
     @classmethod
@@ -34,6 +35,8 @@ class User_(db.Model):
                 user_json["profile_desc"] = ""
             if "notif_count" not in user_json:
                 user_json["notif_count"] = 0
+            if "user_icon" not in user_json:
+                user_json["user_icon"] = ""
 
             new_obj = cls(user_name=user_json["user_name"], 
                         email=user_json["email"],
@@ -41,7 +44,8 @@ class User_(db.Model):
                         last_name=user_json["last_name"],
                         city=user_json["city"],
                         profile_desc=user_json["profile_desc"],
-                        notif_count=user_json["notif_count"])
+                        notif_count=user_json["notif_count"],
+                        user_icon=user_json["user_icon"])
 
             return new_obj
         else:
